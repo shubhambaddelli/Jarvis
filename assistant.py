@@ -1,4 +1,6 @@
 from tasks import list_all_tasks, list_today_tasks, load_tasks, add_task, save_tasks
+from expenses import add_expense, list_today_expenses, list_all_expenses
+
 
 def handle_input(user_input:str) -> str:
     user_input=user_input.lower()
@@ -20,14 +22,27 @@ def handle_input(user_input:str) -> str:
 
 
 def handle_reminder(text):
-    if "today" in text:
-        return list_today_tasks()
-    elif "all" in text:
-        return list_all_tasks()
+    lowered = text.lower()
+    if any(word in lowered for word in ["show", "list", "view", "display"]):
+        if "today" in text:
+            return list_today_tasks()
+        elif "all" in text:
+            return list_all_tasks()
     else:
         return add_task(text)
-def handle_expense(text): return "Expense tracking coming soon!"
+
+def handle_expense(text):
+    lowered = text.lower()
+
+    if any(word in lowered for word in ["show", "list", "view", "display"]):
+        if "today" in lowered:
+            return list_today_expenses()
+        elif "all" in lowered:
+            return list_all_expenses()
+    else:
+        return add_expense(text)
 def handle_routine(text): return "Routine planner coming soon!"
 def handle_diet(text): return "Diet assistant coming soon!"
 def handle_summary(text): return "Summary and reports coming soon!"
 def handle_greet(text): return "Hello, How can help you today?"
+
